@@ -27,6 +27,9 @@ http.createServer(function(req, res) {
 		else if (currentURL.pathname === "/vanasonad"){
 			fs.readFile(textRef, "utf8", (err, data)=>{
 			
+			
+			
+		
 		if(err){
 		//return res.end();	//res.write("Ongi nii!");
 			res.writeHead(200, {"Content-type": "text/html"});	
@@ -36,6 +39,7 @@ http.createServer(function(req, res) {
 			res.write("\n\t<p>Täna on " + dateET.weekDay() + dateET.fullTime() + dateET.partOfDay() + ".</p><p>Kahjuks tänaseks ühtki vanasõna välja pakkuda pole!</p>");
 			res.write(pageFoot);
 			return res.end();
+		
 		} else {
 				let folkWisdom = data.split(";");
 				let folkWisdomOutput = "\n\t<ol>";
@@ -53,18 +57,16 @@ http.createServer(function(req, res) {
 				res.write(pageFoot);
 				return res.end();
 			
-			}
-	})}
-				
+			} }) }
+		
+		 else if (currentURL.pathname === "/hobid"){
+			res.writeHead(200, {"Content-type": "text/html"});
+			res.write('<img src="/strollad2.jpg" alt= "hobiga seotud pilt">');
+			
 
-    //Kodus peab nii tegema
-    //<ol>
-      //  <li>Vanasõna</li>
-        //<li>Vanasüna</li>
-        //...
-    //</ol>
-	
-	else if (currentURL.pathname === "/vp_banner_2025_TA.jpg"){
+			return res.end();
+		
+		} else if (path.extname(currentURL.pathname) === ".jpg"){
 		//liidame muidu kättesaaamatu piltide kausta meie veebi failiteega
 		let bannerPath = path.join(__dirname, "image");
 		fs.readFile(bannerPath + currentURL.pathname, (err, data)=>{
@@ -80,10 +82,21 @@ http.createServer(function(req, res) {
 	else {
 		res.end("Viga 404, ei leia sellist lehte!!");
 	}
+	}
+				
+
+    //Kodus peab nii tegema
+    //<ol>
+      //  <li>Vanasõna</li>
+        //<li>Vanasüna</li>
+        //...
+    //</ol>
+	
+	
 	
 	//git add .
 	//git commit -m "Esimene veeb" (git commit -m "Lisatud node serveri amrsuudid"
 	//git push
 
-}).listen(5119);
+).listen(5119);
 
